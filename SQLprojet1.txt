@@ -1,0 +1,58 @@
+
+
+product production
+	pid/name/weight/class/
+
+customer
+	pid/territoryId/StoreID/accountNumber
+
+
+select p.FirstName, p.LastName, s.StoreID from Sales.Customer as s Join Person.Person as p on s.PersonID = p.BusinessEntityID
+
+
+SELECT p.FirstName, p.LastName, k.StoreID
+FROM Person.Person p
+INNER JOIN Sales.SalesPerson s ON s.BusinessEntityID = p.BusinessEntityID 
+	INNER JOIN Sales.Customer k ON k.TerritoryID = s.TerritoryID
+
+
+
+SELECT req.pseudo AS possesseur,
+   sales.Customer.TerritoryID AS terri,
+   Person.person.BusinessEntityID AS busID
+FROM Sales.SalesPerson
+ 
+INNER JOIN Sales.Customer
+   ON terri.TerritoryID = busID.TerritoryID
+INNER JOIN membres
+   ON membres.id_membre = acheteurs.acheteur
+INNER JOIN (
+   SELECT jeu.id_jeu AS jeu,
+      membres.pseudo AS pseudo
+   FROM membres
+   INNER JOIN jeu
+      ON membres.id_membre = jeu.possesseur
+) AS req
+   ON req.jeu = jeu.id_jeu;
+
+
+
+SELECT req.pseudo AS possesseur,
+   jeu.nom_jeu AS jeu,
+   membres.pseudo AS acheteur
+FROM jeu
+
+INNER JOIN acheteurs
+   ON jeu.id_jeu = acheteurs.id_jeu
+INNER JOIN membres
+   ON membres.id_membre = acheteurs.acheteur
+INNER JOIN (
+   SELECT jeu.id_jeu AS jeu,
+      membres.pseudo AS pseudo
+   FROM membres
+   INNER JOIN jeu
+      ON membres.id_membre = jeu.possesseur
+) AS req
+   ON req.jeu = jeu.id_jeu;
+
+
